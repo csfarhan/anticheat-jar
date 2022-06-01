@@ -9,19 +9,17 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.io.FileWriter;
 
 public class MainWrapper {
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
-        ArrayList<String> names = new ArrayList<>();
-        ListFiles.dirTree(new File("C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu"), names);
-        // Iterate through and print the names arraylist from ListFiles
-        for(String name : names){
-            System.out.println(name);
-            // For each iteration of the name, hash the file and append it to an arraylist
-        }
 
-        File test = new File("C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu\\test1.txt");
-        //SHA-1 checksum
-        String shaChecksum = HashFunctions.getFileChecksum("SHA-256", test);
+        // Hashmap for data
+        HashMap<String, String> data = new HashMap<String, String>();
+        // Call ListFiles with the parameters of the directory and hashmap
+        ListFiles.dirTree(new File("C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu"), data);
+
+
     }
 }
