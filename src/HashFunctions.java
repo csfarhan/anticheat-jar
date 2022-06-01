@@ -1,10 +1,6 @@
 import java.io.*;
-import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.security.DigestInputStream;
 import java.security.MessageDigest;
-import java.nio.file.Paths;
 
 public class HashFunctions {
     public static String getFileChecksum(String algorithm, File file) throws IOException, NoSuchAlgorithmException {

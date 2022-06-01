@@ -1,16 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.io.File;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.io.InputStream;
-import java.nio.file.Paths;
 import java.util.HashMap;
-import java.io.FileWriter;
 
 public class MainWrapper {
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
