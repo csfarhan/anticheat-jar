@@ -1,2 +1,2 @@
-# anticheat-cpp
-Lightweight anti cheat/file verifier coded using C++.
+# anticheat-jar
+Lightweight anti cheat/file verifier coded using Java.
