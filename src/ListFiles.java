@@ -7,9 +7,11 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class ListFiles {
-    public static void dirTree(File dir, HashMap<String, String> data) throws NoSuchAlgorithmException, IOException, URISyntaxException {
+    public static void dirTree(File dir, SortedMap<String, String> data) throws NoSuchAlgorithmException, IOException {
         File[] subdirs = dir.listFiles();
         for (File subdir : subdirs) {
             if (subdir.isDirectory()) {
@@ -24,7 +26,7 @@ public class ListFiles {
             }
         }
     }
-
+  
     public static void serializeData(String name, String hash) throws IOException{
         FileWriter writer = new FileWriter("C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\writing.txt", true);
         writer.write(name + "," + hash);
