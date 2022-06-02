@@ -13,7 +13,7 @@ public class MainWrapper {
 
         // Obtain input from user
         Scanner myObj = new Scanner(System.in);
-        System.out.println("Press '1' for creating reference files\nPress '2' to verify file integrity\nEnter Option: ");
+        System.out.println("Press '1' to determine reference files: ");
 
         String answer = myObj.nextLine();
 
@@ -26,8 +26,14 @@ public class MainWrapper {
             // Call ListFiles with the parameters of the directory and hashmap
             ListFiles.dirTree(new File("C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu"), data);
         }
+
+        // Obtain input from user
+        Scanner myObj2 = new Scanner(System.in);
+        System.out.println("Press '2' to verify file integrity: ");
+
+        String answer2 = myObj.nextLine();
         // If 2, convert reference from txt to hashmap, and hash current files and compare the two hashmaps
-        if (answer.equals("2")){
+        if (answer2.equals("2")){
             // Read txt and write to a string
             String info = null;
             SortedMap<String, String> data  = new TreeMap<String, String>();
