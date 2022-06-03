@@ -57,6 +57,13 @@ public class MainWrapper {
             ListFiles.dirTree(new File("C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu"), dataNew);
             // Then compare the two hashmaps
             System.out.println(data.equals(dataNew));
+            if(data.equals(dataNew)){
+                System.out.println("Verified");
+            }
+            else{
+                Comparer.generateOutput((HashMap<String, String>) data, (HashMap<String, String>) dataNew);
+            }
+
         }
 
     }
