@@ -1,9 +1,9 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.SortedMap;
 
 public class Comparer {
-    public static ArrayList<String> generateOutput(SortedMap<String, String> referenceData, SortedMap<String, String> newData){
-
+    public static ArrayList<String> generateOutput(HashMap<String, String> referenceData, HashMap<String, String> newData){
         ArrayList<String> foundPaths = new ArrayList<>();
         for(String key: referenceData.keySet()){
             //Check if key exists in new data
