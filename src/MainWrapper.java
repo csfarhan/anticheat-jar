@@ -1,8 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -19,12 +19,17 @@ public class MainWrapper {
 
         // If 1, run hashing and store in txt
         if (answer.equals("1")){
+            File file = new File("C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\writing.txt");
+            PrintWriter writer = new PrintWriter(file);
+            writer.print("");
+            writer.close();
             // Runs hashing for the reference folder
             // Hashmap for data
             SortedMap<String, String> data  = new TreeMap<String, String>();
 
             // Call ListFiles with the parameters of the directory and hashmap
             ListFiles.dirTree(new File("C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu"), data);
+
         }
 
         // Obtain input from user
@@ -56,12 +61,11 @@ public class MainWrapper {
             // Call ListFiles with the parameters of the directory and hashmap
             ListFiles.dirTree(new File("C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu"), dataNew);
             // Then compare the two hashmaps
-            System.out.println(data.equals(dataNew));
             if(data.equals(dataNew)){
                 System.out.println("Verified");
             }
             else{
-                Comparer.generateOutput((HashMap<String, String>) data, (HashMap<String, String>) dataNew);
+                Comparer.generateOutput((SortedMap<String, String>) data, (SortedMap<String, String>) dataNew);
             }
 
         }

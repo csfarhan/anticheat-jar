@@ -1,14 +1,8 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.SortedMap;
-import java.util.TreeMap;
 
 public class ListFiles {
     public static void dirTree(File dir, SortedMap<String, String> data) throws NoSuchAlgorithmException, IOException {
@@ -17,9 +11,9 @@ public class ListFiles {
             if (subdir.isDirectory()) {
                 dirTree(subdir, data);
             } else {
-                data.put(subdir.getName(), HashFunctions.getFileChecksum("SHA-256", subdir));
+                data.put(subdir.getAbsolutePath(), HashFunctions.getFileChecksum("SHA-256", subdir));
                 try {
-                    serializeData(subdir.getName(),  HashFunctions.getFileChecksum("SHA-256", subdir));
+                    serializeData(subdir.getAbsolutePath(),  HashFunctions.getFileChecksum("SHA-256", subdir));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
