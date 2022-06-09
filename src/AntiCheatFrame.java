@@ -29,6 +29,12 @@ public class AntiCheatFrame {
         Color color = new Color(0,0,0);
         main_panel.setBackground(color);
 
+        //Adding two buttons
+        JButton b = new JButton("Obtain Reference Files");
+        JButton b2 = new JButton("Check File Integrity");
+        main_panel.add(b);
+        main_panel.add(b2);
+
     }
 
 
