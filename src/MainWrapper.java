@@ -18,7 +18,7 @@ public class MainWrapper {
                 antiCheat.start();
          */
 
-        AntiCheatFrame antiCheatFrame = new AntiCheatFrame( "C:\\Users\\rana_\\IdeaProjects\\anticheat-jar\\anticheat-jar\\testData","referenceTest.txt" );
+        AntiCheatFrame antiCheatFrame = new AntiCheatFrame( "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu","referenceTest.txt" );
         antiCheatFrame.initWindow();
 
     }
