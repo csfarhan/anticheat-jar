@@ -26,7 +26,7 @@ public class AntiCheatFrame {
         main_frame.add(main_panel);
 
         //Setting background color
-        Color color = new Color(0,0,0);
+        Color color = new Color(0,25,162);
         main_panel.setBackground(color);
 
         //Adding two buttons
