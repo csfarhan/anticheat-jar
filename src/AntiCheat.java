@@ -7,7 +7,7 @@ public class AntiCheat {
     private File referenceDataFile;
     public AntiCheat(String rootPath, String referenceData){
         this.rootPath = rootPath;
-        this.referenceDataFile = new File(rootPath);
+        this.referenceDataFile = new File(referenceData);
     }
 
     public void start(){
