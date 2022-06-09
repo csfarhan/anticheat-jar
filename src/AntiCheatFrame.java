@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -26,14 +29,29 @@ public class AntiCheatFrame {
         main_frame.add(main_panel);
 
         //Setting background color
-        Color color = new Color(0,0,0);
+        Color color = new Color(0, 25, 162);
         main_panel.setBackground(color);
 
         //Adding two buttons
-        JButton b = new JButton("Obtain Reference Files");
-        JButton b2 = new JButton("Check File Integrity");
-        main_panel.add(b);
-        main_panel.add(b2);
+        JButton reference = new JButton("Obtain Reference Files");
+        JButton integrity = new JButton("Check File Integrity");
+        main_panel.add(reference);
+        main_panel.add(integrity);
+
+        //Functionality for button 1
+        reference.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AntiCheat antiCheat = new AntiCheat(
+                        "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu",
+                        "referenceTest.txt");
+                try {
+                    antiCheat.start();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
     }
 
