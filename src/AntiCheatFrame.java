@@ -64,9 +64,11 @@ public class AntiCheatFrame {
                         "referenceTest.txt");
                 try {
                     ArrayList<String> foundPaths = antiCheat.start2();
+                    //Verified
                     if (foundPaths.isEmpty()){
                         JOptionPane.showMessageDialog(null, "Verified", "Popup",JOptionPane.INFORMATION_MESSAGE);
                     }
+                    //Verification failed and output files that were edited
                     else{
                         JOptionPane.showMessageDialog(null, "Failed Verification\n" + foundPaths, "Popup",JOptionPane.INFORMATION_MESSAGE);
                     }
