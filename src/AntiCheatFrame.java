@@ -52,6 +52,19 @@ public class AntiCheatFrame {
                 }
             }
         });
+        integrity.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AntiCheat antiCheat = new AntiCheat(
+                        "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu",
+                        "referenceTest.txt");
+                try {
+                    antiCheat.start2();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
     }
 
