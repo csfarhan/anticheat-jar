@@ -3,8 +3,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 public class AntiCheatFrame {
     private final int WIDTH = 700;
@@ -52,6 +54,8 @@ public class AntiCheatFrame {
                 }
             }
         });
+
+        //Functionality for button 2
         integrity.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,7 +63,13 @@ public class AntiCheatFrame {
                         "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu",
                         "referenceTest.txt");
                 try {
-                    antiCheat.start2();
+                    ArrayList<String> foundPaths = antiCheat.start2();
+                    if (foundPaths.isEmpty()){
+                        JOptionPane.showMessageDialog(null, "Verified", "Popup",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Failed Verification\n" + foundPaths, "Popup",JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }

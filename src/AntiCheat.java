@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -15,7 +16,8 @@ public class AntiCheat {
         ReferenceGenerator.generateReferenceFiles(rootPath, referenceDataFile.getAbsolutePath());
         System.out.println("Reference Files Obtained.");
     }
-    public void start2() throws FileNotFoundException{
+    public ArrayList<String> start2() throws FileNotFoundException{
+        Boolean trigger = true;
         HashMap<String, String> referenceData = ReferenceGenerator.deserializeReferenceFile(referenceDataFile.getAbsolutePath());
         // Then hash whatever file is in the given location
         HashMap<String, String> dataNew  = new HashMap<>();
@@ -24,9 +26,12 @@ public class AntiCheat {
         // Then compare the two hashmaps
         if(referenceData.equals(dataNew)){
             System.out.println("Verified.");
+            ArrayList<String> foundPaths = Comparer.generateOutput(referenceData, dataNew);
+            return foundPaths;
         }
         else{
-            Comparer.generateOutput(referenceData, dataNew);
+            ArrayList<String> foundPaths = Comparer.generateOutput(referenceData, dataNew);
+            return foundPaths;
         }
     }
 }
