@@ -11,10 +11,15 @@ import java.util.TreeMap;
 
 public class MainWrapper {
     public static void main(String[] args) {
-        AntiCheat antiCheat = new AntiCheat(
-                "C:\\Users\\rana_\\Downloads\\2SI3-Data-Structures-and-Algorithms-main\\2SI3-Data-Structures-and-Algorithms-main\\Lab1&2",
+        /*
+                AntiCheat antiCheat = new AntiCheat(
+                "C:\\Users\\rana_\\IdeaProjects\\anticheat-jar\\anticheat-jar\\testData",
                 "referenceTest.txt");
+                antiCheat.start();
+         */
 
-        antiCheat.start();
+        AntiCheatFrame antiCheatFrame = new AntiCheatFrame( "C:\\Users\\rana_\\IdeaProjects\\anticheat-jar\\anticheat-jar\\testData","referenceTest.txt" );
+        antiCheatFrame.initWindow();
+
     }
 }
