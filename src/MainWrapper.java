@@ -1,13 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 
 public class MainWrapper {
     public static void main(String[] args) {
@@ -17,9 +8,19 @@ public class MainWrapper {
                 "referenceTest.txt");
                 antiCheat.start();
          */
+        /*
+         AntiCheatFrame antiCheatFrame = new AntiCheatFrame( "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu","referenceTest.txt" );
+         antiCheatFrame.initWindow();
+         */
 
-        AntiCheatFrame antiCheatFrame = new AntiCheatFrame( "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu","referenceTest.txt" );
-        antiCheatFrame.initWindow();
+        DatabaseOperation testDatabase = DatabaseOperation.getInstance("jdbc:sqlserver://poromtest.mssql.somee.com;database=poromtest;user=PoromK_SQLLogin_1;password=prnclvbss7;encrypt=true;trustServerCertificate=true;loginTimeout=30;");
+        testDatabase.executeStatement("CREATE TABLE TESTTABLETWO (id INTEGER not NULL,  first VARCHAR(255),  last VARCHAR(255),  age INTEGER,  PRIMARY KEY ( id ))");
+        try{
+            testDatabase.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
 
     }
 }
