@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 public class MainWrapper {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         /*
                 AntiCheat antiCheat = new AntiCheat(
                 "C:\\Users\\rana_\\IdeaProjects\\anticheat-jar\\anticheat-jar\\testData",
@@ -14,12 +14,19 @@ public class MainWrapper {
          */
 
         DatabaseOperation testDatabase = DatabaseOperation.getInstance("jdbc:sqlserver://poromtest.mssql.somee.com;database=poromtest;user=PoromK_SQLLogin_1;password=prnclvbss7;encrypt=true;trustServerCertificate=true;loginTimeout=30;");
-        testDatabase.executeStatement("CREATE TABLE TESTTABLETWO (id INTEGER not NULL,  first VARCHAR(255),  last VARCHAR(255),  age INTEGER,  PRIMARY KEY ( id ))");
+        testDatabase.executeStatement("CREATE TABLE Auth (id INTEGER IDENTITY(1,1) not NULL PRIMARY KEY, local VARCHAR(MAX) not NULL, domain VARCHAR(MAX) not NULL,  hash VARCHAR(MAX) not NULL)");
         try{
-            testDatabase.close();
-        }catch(IOException e){
+            UserAuth.registerUser("Poromkamal123@gmail.com","@123SexyGuy",testDatabase);
+        }
+        catch(Exception e){
+            try{
+                testDatabase.close();
+            }catch(IOException r){
+                r.printStackTrace();
+            }
             e.printStackTrace();
         }
+
 
 
     }
