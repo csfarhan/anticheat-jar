@@ -1,6 +1,10 @@
+package DatabaseAPI;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class UserAuth {
 
@@ -17,10 +21,12 @@ public class UserAuth {
         }
 
         String hash = hashString(email+password);
-        String emailsplit[] = email.split("@");
-        String emailString = emailsplit[0] + "," + emailsplit[1];
-        //db.executeStatement("INSERT INTO dbo.Auth (local,domain,hash) VALUES ("+emailString+","+hash+")");
-        db.executeStatement("INSERT INTO dbo.Auth (local,domain,hash) VALUES (porom,kamal,123SexyGuy)");
+        db.registerUserDatabase(email, hash);
+    }
+
+    public static String loginUser(String email, String password, DatabaseOperation db) throws NoSuchAlgorithmException, SQLException {
+        String accountHash = hashString(email + password);
+        return db.loginUser(email, accountHash);
     }
 
     private static boolean checkValidPass(String password) {
@@ -48,7 +54,7 @@ public class UserAuth {
     }
 
     private static boolean checkValidEmail(String email) {
-        if (!email.matches("[\\d\\w]+@[\\w]+[\\.][\\w]+")) {
+        if (!email.matches("[\\d\\.\\w]+@[\\w]+[\\.][\\w]+")) {
             return false;
         }
         return true;
