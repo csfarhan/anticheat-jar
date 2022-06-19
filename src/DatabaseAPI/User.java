@@ -6,8 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class UserAuth {
-
+public class User {
+    public static Boolean loggedIn = false;
+    private static String userId = "000000";
     public static void registerUser(String email, String password, DatabaseOperation db) throws Exception {
         String errormsg = "";
         if (!checkValidEmail(email)) {
@@ -24,9 +25,25 @@ public class UserAuth {
         db.registerUserDatabase(email, hash);
     }
 
-    public static String loginUser(String email, String password, DatabaseOperation db) throws NoSuchAlgorithmException, SQLException {
+    /**
+     *
+     * @param email
+     * @param password
+     * @param db
+     * @return return true or false, depending on whether the login attempt was successful
+     * @throws NoSuchAlgorithmException
+     * @throws SQLException
+     */
+    public static Boolean loginUser(String email, String password, DatabaseOperation db) throws NoSuchAlgorithmException, SQLException {
         String accountHash = hashString(email + password);
-        return db.loginUser(email, accountHash);
+
+        String foundId = db.loginUser(email, accountHash);
+
+        if(!foundId.equals("000000")){
+            loggedIn = true;
+            userId = foundId;
+        }
+        return loggedIn;
     }
 
     private static boolean checkValidPass(String password) {
@@ -70,4 +87,10 @@ public class UserAuth {
         }
         return sb.toString();
     }
+
+    private static void logOut(){
+        userId = "000000";
+        loggedIn = false;
+    }
+
 }

@@ -1,5 +1,5 @@
 import DatabaseAPI.DatabaseOperation;
-import DatabaseAPI.UserAuth;
+import DatabaseAPI.User;
 
 import java.util.Scanner;
 
@@ -15,7 +15,6 @@ public class MainWrapper {
          AntiCheatFrame antiCheatFrame = new AntiCheatFrame( "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu","referenceTest.txt" );
          antiCheatFrame.initWindow();
          */
-
         DatabaseOperation testDatabase = DatabaseOperation.getInstance("jdbc:sqlserver://poromtest.mssql.somee.com;database=poromtest;user=PoromK_SQLLogin_1;password=prnclvbss7;encrypt=true;trustServerCertificate=true;loginTimeout=30;");
         //testDatabase.executeStatement("CREATE TABLE Auth (id INTEGER IDENTITY(1,1) not NULL PRIMARY KEY, email VARCHAR(MAX) not NULL,  hash VARCHAR(MAX) not NULL)");
         Scanner in = new Scanner(System.in);
@@ -24,13 +23,15 @@ public class MainWrapper {
         System.out.println("2 to login test data");
 
         if(in.next().equals("1")){
-            UserAuth.registerUser("Porom.Kamal@gmail.com", "@Porom2002", testDatabase); // Already registered don't call this again
+            User.registerUser("Porom.Kamal@gmail.com", "@Porom2002", testDatabase); // Already registered don't call this again
         }else{
-            String foundIdIncorrrect = UserAuth.loginUser("PoromKamal@gmail.com", "@Porom200222", testDatabase); //incorrect login test
-            String foundIdCorrect = UserAuth.loginUser("PoromKamal@gmail.com", "@Porom2002", testDatabase);
+            User.loginUser("PoromKamal@gmail.com", "@Porom200222", testDatabase); //incorrect login test
 
-            System.out.println("Incorrect ID (Should be 000000): "+ foundIdIncorrrect);
-            System.out.println("Correct ID (Should not be 000000): "+ foundIdCorrect);
+            System.out.println(User.loggedIn);
+
+            User.loginUser("PoromKamal@gmail.com", "@Porom2002", testDatabase);
+
+            System.out.println(User.loggedIn);
 
             testDatabase.close();
         }
