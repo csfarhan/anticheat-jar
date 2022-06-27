@@ -88,7 +88,7 @@ public class User {
         return sb.toString();
     }
 
-    private static void logOut(){
+    public static void logOut(){
         userId = "000000";
         loggedIn = false;
     }

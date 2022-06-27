@@ -25,11 +25,11 @@ public class AntiCheatFrame {
     private JFrame login_frame;
 
     private JPanel login_panel;
-    DatabaseOperation testDatabase = DatabaseOperation.getInstance("jdbc:sqlserver://poromtest.mssql.somee.com;database=poromtest;user=PoromK_SQLLogin_1;password=prnclvbss7;encrypt=true;trustServerCertificate=true;loginTimeout=30;");
+    public DatabaseOperation testDatabase = DatabaseOperation.getInstance("jdbc:sqlserver://poromtest.mssql.somee.com;database=poromtest;user=PoromK_SQLLogin_1;password=prnclvbss7;encrypt=true;trustServerCertificate=true;loginTimeout=30;");
     public AntiCheatFrame(String rootPath, String referenceFile ){
         antiCheat = new AntiCheat(rootPath, referenceFile);
     }
-    public void initWindow(){
+    public void initWindow() throws IOException {
         //JFrame initialization
         main_frame = new JFrame("AntiCheat-Jar");
         main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,10 +37,14 @@ public class AntiCheatFrame {
         main_frame.setResizable(false);
         main_frame.setVisible(true);
 
+        main_frame.setContentPane(loginWindow());
+
+    }
+
+    public JPanel dashBoardWindow(){
         //Main panel initialization
         main_panel = new JPanel();
         main_panel.setSize(new Dimension(600, 400));
-        main_frame.add(main_panel);
 
         //Setting background color
         Color color = new Color(3, 159, 3);
@@ -49,8 +53,11 @@ public class AntiCheatFrame {
         //Adding two buttons
         JButton reference = new JButton("Obtain Reference Files");
         JButton integrity = new JButton("Check File Integrity");
+        JButton logout = new JButton("Logout");
+
         main_panel.add(reference);
         main_panel.add(integrity);
+        main_panel.add(logout);
 
         //Functionality for button 1
         reference.addActionListener(new ActionListener() {
@@ -90,22 +97,32 @@ public class AntiCheatFrame {
             }
         });
 
+        logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                User.logOut();
+
+                //Debug
+                if(!User.loggedIn)
+                    System.out.println("Logout Successful");
+
+                try {
+                    main_frame.setContentPane(loginWindow());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        return main_panel;
     }
 
-    public void NewWindow() throws IOException {
-        DatabaseOperation testDatabase = DatabaseOperation.getInstance("jdbc:sqlserver://poromtest.mssql.somee.com;database=poromtest;user=PoromK_SQLLogin_1;password=prnclvbss7;encrypt=true;trustServerCertificate=true;loginTimeout=30;");
-        login_frame = new JFrame("AntiCheat-Jar");
-        login_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        login_frame.setSize(600, 400);
-        login_frame.setResizable(false);
-        login_frame.setVisible(true);
+    public JPanel loginWindow() throws IOException {
 
         //Main panel initialization
         login_panel = new JPanel();
         login_panel.setSize(new Dimension(600, 400));
         login_panel.setLayout(null);
-        login_frame.add(login_panel);
-
         //Setting background color
         Color color = new Color(3, 159, 3);
         login_panel.setBackground(color);
@@ -138,10 +155,6 @@ public class AntiCheatFrame {
         username_text.setSize(100,25);
         password_text.setSize(100,25);
 
-        //information from each text field
-        String username_info = username_text.getText();
-        String password_info = password_text.getText();
-
 
         login_panel.add(username_text);
         login_panel.add(password_text);
@@ -151,34 +164,40 @@ public class AntiCheatFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Go to register page
-                registerWindow();
-                login_frame.setVisible(false);
+                main_frame.setContentPane(registerWindow());
             }
         });
         login_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //if login successful then login
-                initWindow();
-                login_frame.setVisible(false);
+                try {
+                    if(User.loginUser(username_text.getText(), password_text.getText(), testDatabase)){
+                        main_frame.setContentPane(dashBoardWindow());
+                    }
+                    else{
+                        System.out.println("Login Unsuccessful.");
+                    }
+
+                } catch (NoSuchAlgorithmException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
                 //else throw error message
             }
         });
-        testDatabase.close();
+
+        return login_panel;
     }
 
-    public void registerWindow(){
-        JFrame register_frame = new JFrame("AntiCheat-Jar");
-        register_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        register_frame.setSize(600, 400);
-        register_frame.setResizable(false);
-        register_frame.setVisible(true);
+    public JPanel registerWindow(){
 
         //Main panel initialization
         JPanel register_panel = new JPanel();
         register_panel.setSize(new Dimension(600, 400));
         register_panel.setLayout(null);
-        register_frame.add(register_panel);
 
         //Setting background color
         Color color = new Color(3, 159, 3);
@@ -216,15 +235,24 @@ public class AntiCheatFrame {
         password_text.setSize(100,25);
         confirm_text.setSize(100,25);
 
-        //information from each text field
-        String username_info = username_text.getText();
-        String password_info = password_text.getText();
-        String confirm_info = confirm_text.getText();
-
 
         register_panel.add(username_text);
         register_panel.add(password_text);
         register_panel.add(confirm_text);
+
+        register_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    User.registerUser(username_text.getText(), password_text.getText(), testDatabase);
+                    main_frame.setContentPane(loginWindow());
+                }catch(Exception exception){
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Invalid Register", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+
+        return register_panel;
     }
 
 

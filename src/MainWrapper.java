@@ -12,9 +12,7 @@ public class MainWrapper {
                 antiCheat.start();
          */
          AntiCheatFrame antiCheatFrame = new AntiCheatFrame( "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu","referenceTest.txt" );
-         antiCheatFrame.NewWindow();
-
-        DatabaseOperation testDatabase = DatabaseOperation.getInstance("jdbc:sqlserver://poromtest.mssql.somee.com;database=poromtest;user=PoromK_SQLLogin_1;password=prnclvbss7;encrypt=true;trustServerCertificate=true;loginTimeout=30;");
+         antiCheatFrame.initWindow();
         //testDatabase.executeStatement("CREATE TABLE Auth (id INTEGER IDENTITY(1,1) not NULL PRIMARY KEY, email VARCHAR(MAX) not NULL,  hash VARCHAR(MAX) not NULL)");
         Scanner in = new Scanner(System.in);
         System.out.println("DEBUG MODE LOGIN/REGISTER");
