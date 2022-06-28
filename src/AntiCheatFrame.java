@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 public class AntiCheatFrame {
     private final int WIDTH = 800;
     private final int HEIGHT = 500;
-    private AntiCheat antiCheat;
     private JFrame main_frame;
     private JPanel main_panel;
 
@@ -27,7 +26,7 @@ public class AntiCheatFrame {
     private JPanel login_panel;
     public DatabaseOperation testDatabase = DatabaseOperation.getInstance("jdbc:sqlserver://poromtest.mssql.somee.com;database=poromtest;user=PoromK_SQLLogin_1;password=prnclvbss7;encrypt=true;trustServerCertificate=true;loginTimeout=30;");
     public AntiCheatFrame(String rootPath, String referenceFile ){
-        antiCheat = new AntiCheat(rootPath, referenceFile);
+
     }
     public void initWindow() throws IOException {
         //JFrame initialization
@@ -63,14 +62,7 @@ public class AntiCheatFrame {
         reference.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AntiCheat antiCheat = new AntiCheat(
-                        "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu",
-                        "referenceTest.txt");
-                try {
-                    antiCheat.start();
-                } catch (FileNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
+
             }
         });
 
@@ -78,22 +70,7 @@ public class AntiCheatFrame {
         integrity.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AntiCheat antiCheat = new AntiCheat(
-                        "C:\\Users\\Farhan\\IdeaProjects\\anticheat-jar\\Nuntu",
-                        "referenceTest.txt");
-                try {
-                    ArrayList<String> foundPaths = antiCheat.start2();
-                    //Verified
-                    if (foundPaths.isEmpty()){
-                        JOptionPane.showMessageDialog(null, "Verified", "Popup",JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    //Verification failed and output files that were edited
-                    else{
-                        JOptionPane.showMessageDialog(null, "Failed Verification\n" + foundPaths, "Popup",JOptionPane.INFORMATION_MESSAGE);
-                    }
-                } catch (FileNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
+
             }
         });
 

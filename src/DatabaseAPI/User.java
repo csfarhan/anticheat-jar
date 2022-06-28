@@ -1,10 +1,13 @@
 package DatabaseAPI;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
+
+import ReferenceOperations.ReferenceGenerator;
 
 public class User {
     public static Boolean loggedIn = false;
@@ -86,6 +89,32 @@ public class User {
             sb.append(String.format("%02x", b));
         }
         return sb.toString();
+    }
+
+    public static void generateFileReference(String gameName, String rootDirectory){
+        ReferenceGenerator.generateReferenceFiles(rootDirectory, userId, gameName, true);
+    }
+
+    private static HashMap<String, String> deserializeData(String gameName) throws SQLException {
+        return DatabaseOperation.deserializeData(userId, gameName);
+    }
+
+    public static boolean verifyFiles(String gameName, String rootDir) throws SQLException {
+        HashMap<String, String> currentFiles = new HashMap<>();
+        HashMap<String, String> referenceFiles = deserializeData(gameName);
+        ReferenceGenerator.generateFileHashMap(new File(rootDir), currentFiles, userId, gameName,false);
+
+        if(currentFiles.size() != referenceFiles.size()){
+            return false;
+        }
+
+        for(String key: currentFiles.keySet()){
+            if(!referenceFiles.containsKey(key) || !referenceFiles.get(key).equals(currentFiles.get(key))){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static void logOut(){
