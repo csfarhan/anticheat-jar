@@ -3,6 +3,7 @@ package DatabaseAPI;
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.*;
+import java.util.HashMap;
 
 public class DatabaseOperation implements Closeable {
     public static DatabaseOperation database;
@@ -22,6 +23,17 @@ public class DatabaseOperation implements Closeable {
             database = new DatabaseOperation(connectionURL);
         }
         return database;
+    }
+
+    public void executeStatement(String st){
+        if(connection != null){
+            try{
+                Statement statement = connection.createStatement();
+                statement.executeUpdate(st);
+            }catch(SQLException couldNotExecute){
+                couldNotExecute.printStackTrace();
+            }
+        }
     }
 
      void registerUserDatabase(String email, String hash) throws SQLException {
@@ -82,6 +94,33 @@ public class DatabaseOperation implements Closeable {
         }else{
             return loginResult.getString("id");
         }
+    }
+
+    public void insertFileData(String userid, String gameName,String filename, String hash) throws SQLException {
+         String insertData = "INSERT INTO ReferenceFiles (id, gameName, fileName, hash) VALUES (?, ?, ?, ?)";
+         PreparedStatement insertDataStatement = connection.prepareStatement(insertData);
+         insertDataStatement.setString(1, userid);
+         insertDataStatement.setString(2, gameName);
+         insertDataStatement.setString(3, filename);
+         insertDataStatement.setString(4, hash);
+         insertDataStatement.executeUpdate();
+    }
+
+    static HashMap<String, String> deserializeData(String userId, String gameName) throws SQLException {
+
+         HashMap<String, String> fileHashData = new HashMap<>();
+
+         String getDataString = "SELECT id, gameName, fileName, hash FROM ReferenceFiles WHERE id = ? AND gameName = ?";
+         PreparedStatement getDataQuery = connection.prepareStatement(getDataString);
+         getDataQuery.setString(1, userId);
+         getDataQuery.setString(2, gameName);
+         ResultSet dataFound = getDataQuery.executeQuery();
+
+         while(dataFound.next()){
+            fileHashData.put(dataFound.getString("fileName"), dataFound.getString("hash"));
+         }
+
+         return fileHashData;
     }
 
     @Override
